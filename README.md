@@ -10,7 +10,8 @@ npm install --save bc-handler babel-polyfill
 
 ## Example with Redux
 
-```javascript // ./store.js
+```javascript
+// ./store.js
 import { createStore } from "redux"
 import Handler from "bc-handler"
 
@@ -22,7 +23,8 @@ export store = createStore(Handler.reducer)
 export dispatch = store.dispatch.bind(dispatch)
 ```
 
-```javascript // ./handlers/count_inc.js
+```javascript
+// ./handlers/count_inc.js
 import { get } from "bc-http"
 import { dispatch } from "../store"
 import Handler from "bc-handler"
@@ -41,7 +43,8 @@ export const reducer = Handler.add(type, ($$$, {
 }))
 ```
 
-```javascript // ./handlers/count_dec.js
+```javascript
+// ./handlers/count_dec.js
 import { dispatch } from "../store"
 import Handler from "bc-handler"
 
@@ -59,7 +62,8 @@ export const reducer = Handler.add(type, ($$$, {
 }))
 ```
 
-```javascript // ./handlers/count_lol.js
+```javascript
+// ./handlers/count_lol.js
 import { intent as counterInc } from "./count_inc"
 import { intent as counterDec } from "./count_dec"
 
@@ -72,7 +76,8 @@ export const intent = () => {
 }
 ``
 
-```javascript // ./components/counter/index.js
+```javascript
+// ./components/counter/index.js
 import React, { Component }     from "react"
 import { connect }              from "react-redux"
 import { intent as counterInc } from "../../handlers/count_inc"

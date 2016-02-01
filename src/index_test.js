@@ -1,20 +1,41 @@
-import { bob } from "./index"
+import { Handler } from "./index"
 import { equal } from "assert"
 
-describe("index", () => {
-  describe("#bob", () => {
+const DEPOSIT  = "DEPOSIT"
+const WITHDRAW = "WITHDRAW"
 
-    it("bob(1) => 1", () => {
-      equal(bob(1), 1)
+describe("Handler", () => {
+  describe("balance", () => {
+    var hdl = new Handler()
+
+    hdl.initialState(0)
+
+    hdl.add(WITHDRAW, (state, { amount }) => {
+      return state - amount
     })
 
-    it("bob(2) => 4", () => {
-      equal(bob(2), 4)
+    hdl.add(DEPOSIT, (state, { amount }) => {
+      return state + amount
     })
 
-    it("bob(3) => 9", () => {
-      equal(bob(3), 9)
-    })
+    describe("reducer", () => {
+      it("first event", () => {
+        const expect = 50
+        const output = hdl.reducer(null, { type:DEPOSIT, amount:expect })
+        equal(expect, output)
+      })
 
+      it("deposit", () => {
+        const expect = 100
+        const output = hdl.reducer(50, { type:DEPOSIT, amount:50 })
+        equal(expect, output)
+      })
+
+      it("withdraw", () => {
+        const expect = 50
+        const output = hdl.reducer(100, { type:WITHDRAW, amount:50 })
+        equal(expect, output)
+      })
+    })
   })
 })

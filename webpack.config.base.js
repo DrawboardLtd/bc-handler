@@ -8,7 +8,7 @@ module.exports = {
   },
 
   output: {
-    library: 'brick',
+    library: 'Handler',
     libraryTarget: 'umd'
   },
 

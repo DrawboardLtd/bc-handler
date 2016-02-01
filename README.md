@@ -74,7 +74,7 @@ export const intent = () => {
   counterInc()
   counterDec()
 }
-``
+```
 
 ```javascript
 // ./components/counter/index.js

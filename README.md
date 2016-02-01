@@ -25,7 +25,6 @@ export dispatch = store.dispatch.bind(dispatch)
 
 ```javascript
 // ./handlers/count_inc.js
-import { get } from "bc-http"
 import { dispatch } from "../store"
 import Handler from "bc-handler"
 

@@ -16,7 +16,6 @@ Handler.prototype = {
   reducer (state, event) {
     if (state == null) state = this._initialState
     if (null == this.handlers[ event.type ]) return state
-    if (null != this.invariants[ event.type ]) this.invariants[ event.type ](event)
 
     return this.handlers[ event.type ](state, event)
   }

@@ -13,7 +13,7 @@ npm install --save bc-handler babel-polyfill
 ```javascript
 // ./store.js
 import { createStore } from "redux"
-import Handler from "bc-handler"
+import Handler         from "bc-handler"
 
 Handler.initialState({
   count: 0,
@@ -26,7 +26,7 @@ export dispatch = store.dispatch.bind(dispatch)
 ```javascript
 // ./handlers/count_inc.js
 import { dispatch } from "../store"
-import Handler from "bc-handler"
+import Handler      from "bc-handler"
 
 const type  = "COUNT_INC"
 const delta = 1
@@ -45,7 +45,7 @@ export const reducer = Handler.add(type, ($$$, {
 ```javascript
 // ./handlers/count_dec.js
 import { dispatch } from "../store"
-import Handler from "bc-handler"
+import Handler      from "bc-handler"
 
 const type  = "COUNT_DEC"
 const delta = 1
@@ -66,7 +66,7 @@ export const reducer = Handler.add(type, ($$$, {
 import { intent as counterInc } from "./count_inc"
 import { intent as counterDec } from "./count_dec"
 
-const type = "COUNTER_LOL"
+const type = "COUNT_LOL"
 
 export const intent = () => {
   counterInc()

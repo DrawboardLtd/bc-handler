@@ -1,6 +1,6 @@
 {
   "name": "bc-handler",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "handlers handlers handlers handlers",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",

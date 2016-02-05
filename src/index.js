@@ -11,7 +11,7 @@ Handler.prototype = {
 
   reducer ($$$) {
     return (state, event) => {
-      if (state == null) state = this._initialState
+      if (state == null) state = $$$ || this.$$$
       if (null == this.handlers[ event.type ]) return state
       return this.handlers[ event.type ](state, event)
     }

@@ -1,41 +1,41 @@
-import { Handler } from "./index"
-import { equal } from "assert"
+import { handler } from "./index"
+import { deepEqual } from "assert"
 
-const DEPOSIT  = "DEPOSIT"
-const WITHDRAW = "WITHDRAW"
+const INC = "INC"
+const DEC = "DEC"
 
-describe("Handler", () => {
-  describe("balance", () => {
-    var hdl = new Handler()
+const inc = { type:INC }
+const dec = { type:DEC }
 
-    hdl.initialState(0)
+describe("handler", () => {
+  var reducer  = handler({ count:0 })
+  var register = reducer.register
 
-    hdl.add(WITHDRAW, (state, { amount }) => {
-      return state - amount
+  register(INC, $$$ => ({
+    ...$$$,
+    count: $$$.count + 1
+  }))
+
+  register(DEC, $$$ => ({
+    ...$$$,
+    count: $$$.count - 1
+  }))
+
+  const test = ([ desc, init, event, out ]) => {
+    it(desc, () => {
+      deepEqual(
+        reducer(init, event),
+        out
+      )
     })
+  }
 
-    hdl.add(DEPOSIT, (state, { amount }) => {
-      return state + amount
-    })
+  var tests = [
+    [ "no initial state", undefined, inc, { count:1 } ],
+    [ "count 5 inc", { count:5 }, inc, { count:6 } ],
+    [ "count 5 dec", { count:5 }, dec, { count:4 } ],
+  ]
 
-    describe("reducer", () => {
-      it("first event", () => {
-        const expect = 50
-        const output = hdl.reducer(null, { type:DEPOSIT, amount:expect })
-        equal(expect, output)
-      })
-
-      it("deposit", () => {
-        const expect = 100
-        const output = hdl.reducer(50, { type:DEPOSIT, amount:50 })
-        equal(expect, output)
-      })
-
-      it("withdraw", () => {
-        const expect = 50
-        const output = hdl.reducer(100, { type:WITHDRAW, amount:50 })
-        equal(expect, output)
-      })
-    })
-  })
+  for (let t of tests) test(t)
 })
+

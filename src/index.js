@@ -1,21 +1,15 @@
-export function Handler (state) {
-  this.$$$ = state || {}
-  this.handlers = {}
-}
+export function handler ($$$) {
+  let handlers = {}
 
-Handler.prototype = {
-  add(key, fn) {
-    this.handlers[key] = fn
-    return fn
-  },
-
-  reducer ($$$) {
-    return (state, event) => {
-      if (state == null) state = $$$ || this.$$$
-      if (null == this.handlers[ event.type ]) return state
-      return this.handlers[ event.type ](state, event)
-    }
+  function reducer (state = $$$, event) {
+    if (handlers[ event.type ] == null) return state
+    return handlers[ event.type ](state, event)
   }
-}
 
-export default new Handler()
+  reducer.register = (key, fn) => {
+    handlers[key] = fn
+    return fn
+  }
+
+  return reducer
+}

@@ -13,49 +13,46 @@ npm install --save bc-handler babel-polyfill
 ```javascript
 // ./store.js
 import { createStore } from "redux"
-import Handler         from "bc-handler"
+import { handler }     from "bc-handler"
 
-export store = createStore(Handler.reducer({
+export const reducer = handler({
   count: 0
-}))
-export dispatch = store.dispatch.bind(dispatch)
+})
+
+export const register = reducer.register
+export const store    = createStore(reducer)
+export dispatch       = store.dispatch.bind(dispatch)
 ```
 
 ```javascript
 // ./handlers/count_inc.js
-import { dispatch } from "../store"
-import Handler      from "bc-handler"
-
-const type  = "COUNT_INC"
-const delta = 1
+import {
+  dispatch, 
+  register,
+} from "../store"
 
 export const intent = () =>
-  dispatch({ type, delta })
+  dispatch({ type: "COUNT_INC" })
 
-export const reducer = Handler.add(type, ($$$, {
-  delta = delta,
-}) => ({
+register("COUNT_INC", $$$ => ({
   ...$$$,
-  count: $$$.count + delta
+  count: $$$.count + 1
 }))
 ```
 
 ```javascript
 // ./handlers/count_dec.js
-import { dispatch } from "../store"
-import Handler      from "bc-handler"
-
-const type  = "COUNT_DEC"
-const delta = 1
+import {
+  dispatch, 
+  register,
+} from "../store"
 
 export const intent = () =>
-  dispatch({ type, delta })
+  dispatch({ type: "COUNT_DEC" })
 
-export const reducer = Handler.add(type, ($$$, {
-  delta = delta,
-}) => ({
+register("COUNT_DEC", $$$ => ({
   ...$$$,
-  count: $$$.count - delta
+  count: $$$.count + 1
 }))
 ```
 
@@ -63,8 +60,6 @@ export const reducer = Handler.add(type, ($$$, {
 // ./handlers/count_lol.js
 import { intent as counterInc } from "./count_inc"
 import { intent as counterDec } from "./count_dec"
-
-const type = "COUNT_LOL"
 
 export const intent = () => {
   counterInc()

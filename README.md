@@ -15,11 +15,9 @@ npm install --save bc-handler babel-polyfill
 import { createStore } from "redux"
 import Handler         from "bc-handler"
 
-Handler.initialState({
-  count: 0,
-})
-
-export store = createStore(Handler.reducer)
+export store = createStore(Handler.reducer({
+  count: 0
+}))
 export dispatch = store.dispatch.bind(dispatch)
 ```
 
